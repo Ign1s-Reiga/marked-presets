@@ -1,0 +1,37 @@
+{
+  "name": "marked-presets",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles/code.css": "./src/styles/code.css"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx tests/dev/server.ts",
+    "fmt": "oxfmt",
+    "test": "vitest tests/index.test.ts"
+  },
+  "dependencies": {
+    "@shikijs/colorized-brackets": "^4.0.2",
+    "@shikijs/transformers": "^4.0.2",
+    "@types/hast": "^3.0.4",
+    "marked": "^18.0.0",
+    "marked-alert": "^2.1.2",
+    "marked-footnote": "^1.4.0",
+    "marked-shiki": "^1.2.1",
+    "shiki": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "oxfmt": "^0.44.0",
+    "tsx": "^4.19.3",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
+  },
+  "packageManager": "yarn@4.12.0"
+}

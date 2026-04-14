@@ -1,0 +1,326 @@
+/* --- Design tokens --------------------------------------------------------- */
+
+:root {
+  color-scheme: light dark;
+
+  /* Typography */
+  --mp-text-primary:      light-dark(#111827, #ffffff);  /* headings, strong labels         */
+  --mp-text-secondary:    light-dark(#6b7280, #8b8b8b);  /* muted text, captions, subtle UI */
+  --mp-text-ternary:      light-dark(#9ca3af, #686868);  /* placeholders, very dim labels   */
+  --mp-text-link:         light-dark(#2563eb, #7aa2f7);  /* hyperlinks                      */
+  --mp-text-inline-code:  light-dark(#dc2626, #e06c75);  /* inline code                     */
+
+  /* Surface (dark values composited against #161616) */
+  --mp-surface-primary:   light-dark(#f3f4f6, #222222);  /* subtle fills      (#fff @  5%)  */
+  --mp-surface-secondary: light-dark(#e5e7eb, #2d2d2d);  /* borders, dividers (#fff @ 10%)  */
+  --mp-surface-tertiary:  light-dark(#d1d5db, #393939);  /* stronger borders  (#fff @ 15%)  */
+}
+
+/* --- Base line layout ------------------------------------------------------ */
+
+/* Every .line reserves the 2px left-border slot so highlighted lines with a
+   coloured border never shift content horizontally. */
+pre.shiki .line {
+  display: inline-flex;
+  align-items: baseline;
+  width: 100%;
+  border-left: 2px solid transparent;
+}
+
+/* --- transformerNotationHighlight ------ */
+
+pre.shiki.has-highlighted .line {
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+pre.shiki.has-highlighted:hover .line {
+  opacity: 1;
+}
+pre.shiki .line.highlighted {
+  opacity: 1;
+  background-color: rgb(255 255 255 / 0.08);
+  border-left-color: rgb(255 255 255 / 0.35);
+}
+
+/* --- transformerNotationWordHighlight ------ */
+
+/* inset box-shadow instead of border: two adjacent highlighted tokens share a
+   shadow edge without a visible gap, whereas borders would double up. */
+.highlighted-word {
+  background-color: rgb(255 255 255 / 0.13);
+  border-radius: 0.25rem;
+  padding: 1px 4px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3);
+}
+
+/* --- transformerNotationDiff ------ */
+
+pre.shiki .line.diff.add {
+  background-color: rgb(70 149 74 / 0.14);
+  border-left-color: #3fb950;
+}
+pre.shiki .line.diff.remove {
+  background-color: rgb(248 81 73 / 0.14);
+  border-left-color: #f85149;
+}
+
+/* --- transformerNotationErrorLevel ------ */
+
+pre.shiki .line.highlighted.error {
+  background-color: rgb(248 81 73 / 0.12);
+  border-left-color: #f85149;
+}
+pre.shiki .line.highlighted.warning {
+  background-color: rgb(245 158 11 / 0.12);
+  border-left-color: #f59e0b;
+}
+pre.shiki .line.highlighted.info {
+  background-color: rgb(59 130 246 / 0.12);
+  border-left-color: #3b82f6;
+}
+pre.shiki .line.highlighted.log {
+  background-color: rgb(140 140 140 / 0.12);
+  border-left-color: #888888;
+}
+
+/* --- transformerNotationFocus ------ */
+
+pre.shiki.has-focused .line:not(.focused) {
+  opacity: 0.4;
+  filter: blur(0.5px);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+pre.shiki.has-focused:hover .line:not(.focused) {
+  opacity: 1;
+  filter: none;
+}
+
+/* --- Empty leading / trailing lines ---------------------------------------- */
+
+/* Shiki always produces an empty last line from the trailing newline of a
+   fenced block. Hide it (and a matching empty first line) in both modes. */
+pre.shiki code > .line:is(:first-child, :last-child):empty {
+  display: none;
+}
+pre.shiki[data-line-numbers] code > .line:is(:first-child, :last-child):has(> .line-number:only-child) {
+  display: none;
+}
+
+/* --- Line numbers (transformerLineNumbers) ---------------------------------- */
+
+pre.shiki[data-line-numbers] .line-number {
+  /* inline-flex + align-self: stretch fills the full line-box height so the
+     border-right gutter line is unbroken across every line. */
+  display: inline-flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  min-width: 3ch;
+  padding-left: 1rem;
+  padding-right: 0.75rem;
+  margin-right: 1rem;
+  border-right: 2px solid rgb(255 255 255 / 0.15);
+  color: rgb(255 255 255 / 0.25);
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+/* --- Code block chrome (.code-block wrapper emitted by parseMarkdown) ------- */
+
+.code-block {
+  margin: 1.2em 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--mp-surface-secondary);
+}
+
+.code-block .code-header {
+  display: flex;
+  align-items: center;
+  padding: 7px 16px;
+  background: light-dark(#f9fafb, rgb(255 255 255 / 0.04));
+  border-bottom: 1px solid var(--mp-surface-secondary);
+}
+
+.code-block .code-lang {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--mp-text-ternary);
+}
+
+.code-block .copy-btn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid light-dark(#d1d5db, rgb(255 255 255 / 0.12));
+  border-radius: 5px;
+  color: light-dark(#6b7280, rgb(255 255 255 / 0.30));
+  font-family: inherit;
+  font-size: 11px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+  user-select: none;
+}
+.code-block .copy-btn:hover {
+  background: light-dark(#f3f4f6, rgb(255 255 255 / 0.07));
+  color: light-dark(#374151, rgb(255 255 255 / 0.75));
+  border-color: light-dark(#9ca3af, rgb(255 255 255 / 0.25));
+}
+.code-block .copy-btn.copied {
+  color: light-dark(#16a34a, #22c55e);
+  border-color: light-dark(#16a34a, #22c55e);
+}
+
+.code-block pre {
+  margin: 0;
+  border-radius: 0;
+  overflow-x: auto;
+}
+.code-block code {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.code-block .line {
+  padding-right: 20px;
+}
+
+/* --- Markdown prose (wrap rendered output in an element with class="md-body") */
+
+.md-body {
+  line-height: 1.7;
+}
+
+.md-body :is(h1, h2, h3, h4) {
+  margin: 1.4em 0 .5em;
+  color: var(--mp-text-primary);
+}
+.md-body h1 {
+  font-size: 2em;
+  border-bottom: 1px solid var(--mp-surface-secondary);
+  padding-bottom: .3em;
+}
+.md-body h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--mp-surface-secondary);
+  padding-bottom: .2em;
+}
+
+.md-body p { margin: .8em 0; }
+
+.md-body a {
+  color: var(--mp-text-link);
+  text-decoration: none;
+}
+.md-body a:hover { text-decoration: underline; }
+
+.md-body :is(ul, ol) {
+  padding-left: 1.5em;
+  margin: .8em 0;
+}
+.md-body li { margin: .3em 0; }
+
+.md-body blockquote {
+  border-left: 4px solid var(--mp-surface-tertiary);
+  margin: 1em 0;
+  padding: .5em 1em;
+  color: var(--mp-text-secondary);
+  background: var(--mp-surface-primary);
+  border-radius: 0 6px 6px 0;
+}
+
+.md-body hr {
+  border: none;
+  border-top: 1px solid var(--mp-surface-secondary);
+  margin: 1.5em 0;
+}
+
+.md-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+.md-body :is(th, td) {
+  border: 1px solid var(--mp-surface-secondary);
+  padding: 8px 12px;
+}
+.md-body th { background: var(--mp-surface-primary); }
+
+.md-body img {
+  display: block;
+  max-width: 80%;
+  margin: 1em auto 0;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+/* Italic on the line immediately after an image renders as a caption. */
+.md-body :is(img + em, img + br + em) {
+  display: block;
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--mp-text-secondary);
+  margin-top: 0.5em;
+}
+
+.md-body code:not(pre code) {
+  background: var(--mp-surface-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--mp-text-inline-code);
+}
+
+/* --- marked-alert ---------------------------------------------------------- */
+
+.md-body .markdown-alert {
+  border-left: 4px solid #888;
+  padding: 0.5em 1em 0.75em;
+  margin: 1em 0;
+  border-radius: 4px 10px 10px 4px;
+}
+
+/* Suppress default p margin inside alerts so it doesn't inflate their height. */
+.md-body .markdown-alert > p { margin: 0; }
+.md-body .markdown-alert > p + p { margin-top: .35em; }
+
+.md-body .markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: .35em;
+  font-size: .875em;
+  font-weight: 700;
+  margin-bottom: .4em;
+}
+.md-body .markdown-alert-title svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.md-body .markdown-alert.markdown-alert-note      { border-left-color: #3b82f6; background: rgb( 59 130 246 / .08); }
+.md-body .markdown-alert.markdown-alert-tip       { border-left-color: #22c55e; background: rgb( 34 197  94 / .08); }
+.md-body .markdown-alert.markdown-alert-warning   { border-left-color: #f59e0b; background: rgb(245 158  11 / .08); }
+.md-body .markdown-alert.markdown-alert-caution   { border-left-color: #ef4444; background: rgb(239  68  68 / .08); }
+.md-body .markdown-alert.markdown-alert-important { border-left-color: #a855f7; background: rgb(168  85 247 / .08); }
+
+.md-body .markdown-alert.markdown-alert-note      .markdown-alert-title { color: #3b82f6; }
+.md-body .markdown-alert.markdown-alert-tip       .markdown-alert-title { color: #22c55e; }
+.md-body .markdown-alert.markdown-alert-warning   .markdown-alert-title { color: #f59e0b; }
+.md-body .markdown-alert.markdown-alert-caution   .markdown-alert-title { color: #ef4444; }
+.md-body .markdown-alert.markdown-alert-important .markdown-alert-title { color: #a855f7; }
+
+/* --- marked-footnote ------------------------------------------------------- */
+
+.md-body .footnotes {
+  margin-top: 2em;
+  border-top: 1px solid var(--mp-surface-secondary);
+  padding-top: 1em;
+  font-size: .9em;
+  color: var(--mp-text-secondary);
+}
