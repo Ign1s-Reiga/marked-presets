@@ -1,17 +1,21 @@
 {
-  "name": "marked-presets",
+  "name": "@ign1s-reiga/marked-presets",
   "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles/code.css": "./src/styles/code.css"
+    "./styles": "./dist/index.css"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && cp src/styles/index.css dist/index.css",
     "dev": "tsx tests/dev/server.ts",
     "fmt": "oxfmt",
     "test": "vitest tests/index.test.ts"
@@ -29,6 +33,7 @@
   "devDependencies": {
     "@types/node": "^25.6.0",
     "oxfmt": "^0.44.0",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.19.3",
     "typescript": "^6.0.2",
     "vitest": "^4.1.4"

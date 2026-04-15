@@ -13,3 +13,5 @@ node_modules
 .vscode
 
 tests/dev/samples/
+
+dist/

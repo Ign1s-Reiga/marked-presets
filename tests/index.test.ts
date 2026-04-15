@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import parseMarkdown from '../src/index';
+import parseMarkdown from '../src/index.js';
 
 describe('parseMarkdown', () => {
   describe('basic rendering', () => {

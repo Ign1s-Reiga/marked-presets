@@ -21,7 +21,7 @@ function shell(): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>marked-presets dev</title>
-  <link rel="stylesheet" href="/styles/code.css">
+  <link rel="stylesheet" href="/styles/index.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { display: flex; height: 100dvh; font-family: system-ui, sans-serif; background: #1a1a2e; color: #e0e0e0; }
