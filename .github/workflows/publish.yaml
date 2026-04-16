@@ -17,7 +17,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: latest
+          # Use Node.js 24 to avoid "bad file descriptor" error.
+          # https://github.com/yarnpkg/berry/issues/7065
+          node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@ign1s-reiga'
       - name: Install Yarn and dependencies
