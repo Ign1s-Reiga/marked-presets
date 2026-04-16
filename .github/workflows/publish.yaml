@@ -1,8 +1,12 @@
 name: Publish package
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  
 
 jobs:
   publish:
@@ -18,7 +22,6 @@ jobs:
           node-version: latest
           registry-url: https://npm.pkg.github.com/
           scope: '@ign1s-reiga'
-          cache: 'yarn'
       - name: Install Yarn and dependencies
         run: |
           npm install -g corepack
@@ -30,7 +33,7 @@ jobs:
         id: get_version
         run: echo "VERSION=${TAG_NAME#v}" >> $GITHUB_OUTPUT
         env:
-          TAG_NAME: ${{ github.event.release.tag_name }}
+          TAG_NAME: ${{ github.ref_name }}
       - name: Update package.json version
         uses: jossef/action-set-json-field@v2.2
         with:
