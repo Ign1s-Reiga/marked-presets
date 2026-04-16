@@ -1,5 +1,16 @@
 {
   "name": "@ign1s-reiga/marked-presets",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "restricted",
+    "@ign1s-reiga:registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ign1s-Reiga/marked-presets"
+  },
+  "license": "MIT",
+  "author": "Ign1s-Reiga",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",

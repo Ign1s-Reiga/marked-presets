@@ -1,0 +1,43 @@
+name: Publish package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: latest
+          registry-url: https://npm.pkg.github.com/
+          scope: '@ign1s-reiga'
+          cache: 'yarn'
+      - name: Install Yarn and dependencies
+        run: |
+          npm install -g corepack
+          yarn set version stable
+          yarn install --immutable --immutable-cache
+      - name: Build package
+        run: yarn build
+      - name: Extract version
+        id: get_version
+        run: echo "VERSION=${TAG_NAME#v}" >> $GITHUB_OUTPUT
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+      - name: Update package.json version
+        uses: jossef/action-set-json-field@v2.2
+        with:
+          file: package.json
+          field: version
+          value: ${{ steps.get_version.outputs.VERSION }}
+      - name: Publish package
+        run: yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

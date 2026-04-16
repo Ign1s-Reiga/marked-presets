@@ -4,7 +4,6 @@ import {
   transformerNotationErrorLevel,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
-  transformerRenderIndentGuides,
 } from '@shikijs/transformers';
 import { LANG_NAMES, langDisplayName } from '@utils/langDisplayName.js';
 import { transformerLineNumbers } from '@utils/transformerLineNumbers.js';
