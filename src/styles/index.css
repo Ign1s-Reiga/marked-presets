@@ -198,15 +198,17 @@ pre.shiki[data-line-numbers] .line-number {
   color: var(--mp-text-primary);
 }
 .md-body h1 {
-  font-size: 2em;
+  font-size: 2rem;
   border-bottom: 1px solid var(--mp-surface-secondary);
   padding-bottom: .3em;
 }
 .md-body h2 {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   border-bottom: 1px solid var(--mp-surface-secondary);
   padding-bottom: .2em;
 }
+.md-body h3 { font-size: 1.25rem; }
+.md-body h4 { font-size: 1.125rem; }
 
 .md-body p { margin: .8em 0; }
 
