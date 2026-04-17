@@ -5,7 +5,6 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -20,11 +19,10 @@ jobs:
           # Use Node.js 24 to avoid "bad file descriptor" error.
           # https://github.com/yarnpkg/berry/issues/7065
           node-version: '24'
-          registry-url: https://npm.pkg.github.com/
-          scope: '@ign1s-reiga'
       - name: Install Yarn and dependencies
         run: |
           npm install -g corepack
+          corepack enable
           yarn set version stable
           yarn install --immutable --immutable-cache
       - name: Build package
@@ -41,6 +39,9 @@ jobs:
           field: version
           value: ${{ steps.get_version.outputs.VERSION }}
       - name: Publish package
-        run: yarn npm publish
+        run: |
+          yarn config set npmRegistryServer https://npm.pkg.github.com/
+          yarn config set npmAuthToken "${NODE_AUTH_TOKEN}"
+          yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
