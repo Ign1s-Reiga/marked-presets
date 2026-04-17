@@ -198,9 +198,9 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  if (url.pathname === '/styles/code.css') {
+  if (url.pathname === '/styles/index.css') {
     try {
-      const css = await readFile(join(ROOT, '../../src/styles/code.css'), 'utf8');
+      const css = await readFile(join(ROOT, '../../src/styles/index.css'), 'utf8');
       res.writeHead(200, { 'Content-Type': 'text/css; charset=utf-8' });
       res.end(css);
     } catch {

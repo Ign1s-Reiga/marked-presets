@@ -11,6 +11,7 @@ import { Marked } from 'marked';
 import markedAlert from 'marked-alert';
 import markedFootnote from 'marked-footnote';
 import markedShiki from 'marked-shiki';
+import { gfmHeadingId as markedGfmHeadingId } from 'marked-gfm-heading-id';
 import { createHighlighter } from 'shiki';
 
 const preloadLangs = Object.keys(LANG_NAMES).filter((lang) => lang !== 'text');
@@ -26,6 +27,7 @@ async function parseMarkdown(md: string): Promise<string> {
   })
   .use(markedAlert())
   .use(markedFootnote())
+  .use(markedGfmHeadingId())
   .use(markedShiki({
     highlight(code, lang, props) {
       const resolvedLang = preloadLangs.includes(lang) ? lang : 'text';
