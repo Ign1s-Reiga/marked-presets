@@ -2,7 +2,7 @@
   color-scheme: light dark;
 
   /* Typography */
-  --mp-text-primary:      light-dark(#111827, #ffffff);  /* headings, strong labels         */
+  --mp-text-primary:      light-dark(#111827, #e6edf3);  /* headings, strong labels         */
   --mp-text-secondary:    light-dark(#6b7280, #8b8b8b);  /* muted text, captions, subtle UI */
   --mp-text-ternary:      light-dark(#9ca3af, #686868);  /* placeholders, very dim labels   */
   --mp-text-link:         light-dark(#2563eb, #7aa2f7);  /* hyperlinks                      */
@@ -191,10 +191,12 @@ pre.shiki[data-line-numbers] .line-number {
 
 .md-body {
   line-height: 1.7;
+  color: var(--mp-text-primary);
 }
 
 .md-body :is(h1, h2, h3, h4) {
   margin: 1.4em 0 .5em;
+  font-weight: bold;
   color: var(--mp-text-primary);
 }
 .md-body h1 {
@@ -229,7 +231,6 @@ pre.shiki[data-line-numbers] .line-number {
   margin: 1em 0;
   padding: .5em 1em;
   color: var(--mp-text-secondary);
-  background: var(--mp-surface-primary);
   border-radius: 0 6px 6px 0;
 }
 
@@ -271,7 +272,7 @@ pre.shiki[data-line-numbers] .line-number {
   background: var(--mp-surface-primary);
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 0.875em;
   color: var(--mp-text-inline-code);
 }
 
@@ -286,7 +287,10 @@ pre.shiki[data-line-numbers] .line-number {
 
 /* Suppress default p margin inside alerts so it doesn't inflate their height. */
 .md-body .markdown-alert > p { margin: 0; }
-.md-body .markdown-alert > p + p { margin-top: .35em; }
+.md-body .markdown-alert > p + p {
+  margin-top: .35em;
+  color: var(--mp-text-primary)
+}
 
 .md-body .markdown-alert-title {
   display: flex;
