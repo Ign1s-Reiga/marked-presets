@@ -80,6 +80,7 @@ function shell(): string {
       overflow-y: auto;
       padding: 32px 48px;
       transition: background-color .2s;
+      scroll-behavior: smooth;
     }
     #preview.loading { opacity: .4; pointer-events: none; }
 

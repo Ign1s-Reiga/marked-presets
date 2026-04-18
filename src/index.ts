@@ -19,7 +19,7 @@ const highlighter = await createHighlighter({
   langs: preloadLangs,
 });
 
-async function parseMarkdown(md: string): Promise<string> {
+export async function renderMarkdown(md: string): Promise<string> {
   const marked = new Marked({
     async: true,
     breaks: true,
@@ -27,6 +27,19 @@ async function parseMarkdown(md: string): Promise<string> {
   .use(markedAlert())
   .use(markedFootnote())
   .use(markedGfmHeadingId())
+  .use({
+    hooks: {
+      postprocess: (html) => {
+        return html.replace(/<h([2-6]) id="([^"]+)">([\s\S]+?)<\/h\2>/g, (_, level, id, content) => {
+          return `
+            <h${level} id="${id}">
+              <a class="heading-anchor" href="#${id}" aria-label="Link to this section"></a>
+              ${content}
+            </h${level}>`;
+        });
+      }
+    }
+  })
   .use(markedShiki({
     highlight(code, lang, props) {
       const resolvedLang = preloadLangs.includes(lang) ? lang : 'text';
@@ -58,5 +71,3 @@ async function parseMarkdown(md: string): Promise<string> {
 
   return await marked.parse(md);
 }
-
-export default parseMarkdown;
