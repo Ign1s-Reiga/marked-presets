@@ -198,15 +198,11 @@ pre.shiki.has-focused:hover .line:not(.focused) {
   left: -1.25rem;
   color: var(--mp-text-ternary);
   text-decoration: none;
-  font-weight: normal;
 }
-.md-body .heading-anchor:hover { text-decoration: none; }
+.md-body .heading-anchor:hover { text-decoration: underline; }
 .md-body .heading-anchor::before {
   content: '#';
-  opacity: 0;
-  transition: opacity 0.15s;
 }
-.md-body :is(h2, h3, h4):hover .heading-anchor::before { opacity: 1; }
 
 .md-body p { margin: .8em 0; }
 
@@ -226,7 +222,6 @@ pre.shiki.has-focused:hover .line:not(.focused) {
   border-left: 4px solid var(--mp-surface-tertiary);
   margin: 1em 0;
   padding: .5em 1em;
-  color: var(--mp-text-ternary);
   border-radius: 0 6px 6px 0;
 }
 

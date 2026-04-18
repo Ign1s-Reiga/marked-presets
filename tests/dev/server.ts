@@ -2,7 +2,7 @@ import { createServer } from 'http';
 import { readdir, readFile } from 'fs/promises';
 import { basename, dirname, extname, join } from 'path';
 import { fileURLToPath } from 'url';
-import parseMarkdown from '../../src/index.js';
+import { renderMarkdown } from '../../src/index.js';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 
@@ -230,7 +230,7 @@ const server = createServer(async (req, res) => {
     }
     try {
       const md = await readFile(join(SAMPLES_DIR, basename(file)), 'utf8');
-      const html = await parseMarkdown(md);
+      const html = await renderMarkdown(md);
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(html);
       log(method, url.pathname, 200, Date.now() - start, file);

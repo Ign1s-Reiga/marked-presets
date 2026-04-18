@@ -30,7 +30,7 @@ export async function renderMarkdown(md: string): Promise<string> {
   .use({
     hooks: {
       postprocess: (html) => {
-        return html.replace(/<h([2-6]) id="([^"]+)">([\s\S]+?)<\/h\2>/g, (_, level, id, content) => {
+        return html.replace(/<h([2-4]) id="([^"]+)">(.+?)<\/h\1>/g, (_, level, id, content) => {
           return `
             <h${level} id="${id}">
               <a class="heading-anchor" href="#${id}" aria-label="Link to this section"></a>
