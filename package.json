@@ -35,7 +35,7 @@
     "@shikijs/colorized-brackets": "^4.0.2",
     "@shikijs/transformers": "^4.0.2",
     "@types/hast": "^3.0.4",
-    "marked": "^18.0.0",
+    "marked": "^18.0.1",
     "marked-alert": "^2.1.2",
     "marked-footnote": "^1.4.0",
     "marked-gfm-heading-id": "^4.1.4",
@@ -44,10 +44,10 @@
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "oxfmt": "^0.44.0",
+    "oxfmt": "^0.45.0",
     "tsc-alias": "^1.8.16",
-    "tsx": "^4.19.3",
-    "typescript": "^6.0.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.4"
   },
   "packageManager": "yarn@4.14.0"
