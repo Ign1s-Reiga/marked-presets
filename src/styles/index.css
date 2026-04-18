@@ -3,8 +3,8 @@
 
   /* Typography */
   --mp-text-primary:      light-dark(#111827, #e6edf3);  /* headings, strong labels         */
-  --mp-text-secondary:    light-dark(#6b7280, #8b8b8b);  /* muted text, captions, subtle UI */
-  --mp-text-ternary:      light-dark(#9ca3af, #686868);  /* placeholders, very dim labels   */
+  --mp-text-secondary:    light-dark(#374151, #adbac7);  /* body text                       */
+  --mp-text-ternary:      light-dark(#6b7280, #768390);  /* captions, muted UI, footnotes   */
   --mp-text-link:         light-dark(#2563eb, #7aa2f7);  /* hyperlinks                      */
   --mp-text-inline-code:  light-dark(#dc2626, #e06c75);  /* inline code                     */
 
@@ -93,80 +93,53 @@ pre.shiki.has-focused:hover .line:not(.focused) {
   filter: none;
 }
 
-/* --- Empty leading / trailing lines ---------------------------------------- */
-
-/* Shiki always produces an empty last line from the trailing newline of a
-   fenced block. Hide it (and a matching empty first line) in both modes. */
-pre.shiki code > .line:is(:first-child, :last-child):empty {
-  display: none;
-}
-pre.shiki[data-line-numbers] code > .line:is(:first-child, :last-child):has(> .line-number:only-child) {
-  display: none;
-}
-
-/* --- Line numbers (transformerLineNumbers) ---------------------------------- */
-
-pre.shiki[data-line-numbers] .line-number {
-  /* inline-flex + align-self: stretch fills the full line-box height so the
-     border-right gutter line is unbroken across every line. */
-  display: inline-flex;
-  align-self: stretch;
-  align-items: center;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  min-width: 3ch;
-  padding-left: 1rem;
-  padding-right: 0.75rem;
-  margin-right: 1rem;
-  border-right: 2px solid rgb(255 255 255 / 0.15);
-  color: rgb(255 255 255 / 0.25);
-  font-size: 0.875rem;
-  user-select: none;
-}
-
 /* --- Code block chrome (.code-block wrapper emitted by parseMarkdown) ------- */
 
 .code-block {
+  position: relative;
   margin: 1.2em 0;
   border-radius: 0.5rem;
   overflow: hidden;
   border: 1px solid var(--mp-surface-secondary);
 }
 
-.code-block .code-header {
-  display: flex;
-  align-items: center;
-  padding: 7px 16px;
-  background: light-dark(#f9fafb, rgb(255 255 255 / 0.04));
-  border-bottom: 1px solid var(--mp-surface-secondary);
+.code-block .copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  opacity: 0;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 5px;
+  color: var(--mp-text-ternary);
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s, opacity .15s;
+  user-select: none;
 }
+.code-block:hover .copy-btn { opacity: 1; }
 
 .code-block .code-lang {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
   font-family: ui-monospace, monospace;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: .08em;
   color: var(--mp-text-ternary);
-}
-
-.code-block .copy-btn {
-  margin-left: auto;
-  background: none;
-  border: 1px solid light-dark(#d1d5db, rgb(255 255 255 / 0.12));
-  border-radius: 5px;
-  color: light-dark(#6b7280, rgb(255 255 255 / 0.30));
-  font-family: inherit;
-  font-size: 11px;
-  padding: 2px 10px;
-  cursor: pointer;
-  transition: background .15s, color .15s, border-color .15s;
   user-select: none;
+  transition: opacity .15s;
 }
+.code-block:hover .code-lang { opacity: 0; }
 .code-block .copy-btn:hover {
-  background: light-dark(#f3f4f6, rgb(255 255 255 / 0.07));
-  color: light-dark(#374151, rgb(255 255 255 / 0.75));
-  border-color: light-dark(#9ca3af, rgb(255 255 255 / 0.25));
+  background: rgb(255 255 255 / 0.10);
+  color: rgb(255 255 255 / 0.75);
+  border-color: rgb(255 255 255 / 0.25);
 }
 .code-block .copy-btn.copied {
   color: light-dark(#16a34a, #22c55e);
@@ -174,9 +147,12 @@ pre.shiki[data-line-numbers] .line-number {
 }
 
 .code-block pre {
+  position: relative;
+  z-index: 0;
   margin: 0;
   border-radius: 0;
   overflow-x: auto;
+  padding: 1rem;
 }
 .code-block code {
   display: block;
@@ -191,7 +167,7 @@ pre.shiki[data-line-numbers] .line-number {
 
 .md-body {
   line-height: 1.7;
-  color: var(--mp-text-primary);
+  color: var(--mp-text-secondary);
 }
 
 .md-body :is(h1, h2, h3, h4) {
@@ -230,7 +206,7 @@ pre.shiki[data-line-numbers] .line-number {
   border-left: 4px solid var(--mp-surface-tertiary);
   margin: 1em 0;
   padding: .5em 1em;
-  color: var(--mp-text-secondary);
+  color: var(--mp-text-ternary);
   border-radius: 0 6px 6px 0;
 }
 
@@ -264,7 +240,7 @@ pre.shiki[data-line-numbers] .line-number {
   display: block;
   text-align: center;
   font-size: 0.85em;
-  color: var(--mp-text-secondary);
+  color: var(--mp-text-ternary);
   margin-top: 0.5em;
 }
 
@@ -287,10 +263,7 @@ pre.shiki[data-line-numbers] .line-number {
 
 /* Suppress default p margin inside alerts so it doesn't inflate their height. */
 .md-body .markdown-alert > p { margin: 0; }
-.md-body .markdown-alert > p + p {
-  margin-top: .35em;
-  color: var(--mp-text-primary)
-}
+.md-body .markdown-alert > p + p { margin-top: .35em; }
 
 .md-body .markdown-alert-title {
   display: flex;
@@ -326,5 +299,5 @@ pre.shiki[data-line-numbers] .line-number {
   border-top: 1px solid var(--mp-surface-secondary);
   padding-top: 1em;
   font-size: .9em;
-  color: var(--mp-text-secondary);
+  color: var(--mp-text-ternary);
 }

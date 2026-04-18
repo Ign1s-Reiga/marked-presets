@@ -104,7 +104,7 @@ function shell(): string {
     /* ── Light theme ─────────────────────────────────────────────────────────── */
     :root[data-color-scheme="light"] { color-scheme: light; }
     :root[data-color-scheme="light"] #preview { background: #fff; }
-    :root[data-color-scheme="light"] .md-body  { background: #fff; color: var(--mp-text-primary); }
+    :root[data-color-scheme="light"] .md-body  { background: #fff; }
 
     /* ── Dark theme ──────────────────────────────────────────────────────────── */
     :root[data-color-scheme="dark"] { color-scheme: dark; }
