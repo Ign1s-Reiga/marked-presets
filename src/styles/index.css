@@ -129,7 +129,6 @@ pre.shiki.has-focused:hover .line:not(.focused) {
   z-index: 1;
   font-family: ui-monospace, monospace;
   font-size: 0.75rem;
-  text-transform: uppercase;
   letter-spacing: .08em;
   color: var(--mp-text-ternary);
   user-select: none;

@@ -11,7 +11,6 @@ export const LANG_NAMES: Record<string, string> = {
   dotenv: '.env',
   rs: 'Rust',
   cs: 'C#',
-  csharp: 'C#',
   cpp: 'C++',
   java: 'Java',
   kt: 'Kotlin',
