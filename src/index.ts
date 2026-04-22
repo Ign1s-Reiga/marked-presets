@@ -11,12 +11,40 @@ import markedAlert from 'marked-alert';
 import markedFootnote from 'marked-footnote';
 import markedShiki from 'marked-shiki';
 import { gfmHeadingId as markedGfmHeadingId } from 'marked-gfm-heading-id';
-import { createHighlighter } from 'shiki';
+import { createHighlighterCore } from 'shiki/core';
+import githubDark from 'shiki/themes/github-dark.mjs';
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma';
 
 const preloadLangs = Object.keys(LANG_NAMES).filter((lang) => lang !== 'text');
-const highlighter = await createHighlighter({
-  themes: ['github-dark'],
-  langs: preloadLangs,
+const highlighter = await createHighlighterCore({
+  themes: [githubDark],
+  langs: [
+    import('shiki/langs/javascript.mjs'),
+    import('shiki/langs/jsx.mjs'),
+    import('shiki/langs/typescript.mjs'),
+    import('shiki/langs/tsx.mjs'),
+    import('shiki/langs/html.mjs'),
+    import('shiki/langs/css.mjs'),
+    import('shiki/langs/json.mjs'),
+    import('shiki/langs/toml.mjs'),
+    import('shiki/langs/yaml.mjs'),
+    import('shiki/langs/dotenv.mjs'),
+    import('shiki/langs/rust.mjs'),
+    import('shiki/langs/csharp.mjs'),
+    import('shiki/langs/cpp.mjs'),
+    import('shiki/langs/java.mjs'),
+    import('shiki/langs/kotlin.mjs'),
+    import('shiki/langs/python.mjs'),
+    import('shiki/langs/shell.mjs'),
+    import('shiki/langs/powershell.mjs'),
+    import('shiki/langs/sql.mjs'),
+    import('shiki/langs/markdown.mjs'),
+    import('shiki/langs/mdx.mjs'),
+    import('shiki/langs/diff.mjs'),
+    import('shiki/langs/nix.mjs'),
+    import('shiki/langs/dockerfile.mjs'),
+  ],
+  engine: createOnigurumaEngine(import('shiki/wasm')),
 });
 
 export async function renderMarkdown(md: string): Promise<string> {
